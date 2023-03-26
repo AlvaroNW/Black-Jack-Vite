@@ -58,7 +58,7 @@ function App() {
       </div>
       <div className="control-buttons">
         {drawCards.length === 0 && <button onClick={handleNewGame}>NEW ROUND</button>}
-        <button onClick={shuffleDeck}>SUFFLE DECK</button>
+        <button onClick={shuffleDeck}>SUFFLE</button>
         <button onClick={handleHit}>HIT</button>
       </div>
 
