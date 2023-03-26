@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import CardSum from "./components/CardSum";
 
+
 const NEW_DECK_ENDPOINT = "https://deckofcardsapi.com/api/deck/new/";
 const NEW_DECK_ENDPOINT_SIX_DECKS =
   "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6";
@@ -23,7 +24,7 @@ function App() {
 
   console.log(deckID);
 
-  const handleDraw = () => {
+  const handleNewGame = () => {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=2`)
       .then((response) => response.json())
       .then((data) => {
@@ -41,20 +42,27 @@ function App() {
   };
   function shuffleDeck() {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/shuffle`);
+    setDrawCards([]);
   }
 
   return (
     <div className="App">
       <h2>BlackJack</h2>
-      <div>
+      <div className="player-hand"> 
+        <CardSum drawCards={drawCards} />
+      </div>
+      <div className="cards-display">
         {drawCards?.map((card) => (
           <img src={card.image} key={card.code} />
         ))}
-        <button onClick={handleDraw}>DRAW CARDS</button>
+      </div>
+      <div className="control-buttons">
+        {drawCards.length === 0 && <button onClick={handleNewGame}>NEW ROUND</button>}
         <button onClick={shuffleDeck}>SUFFLE DECK</button>
         <button onClick={handleHit}>HIT</button>
       </div>
-      <CardSum drawCards={drawCards} />
+
+      
     </div>
   );
 }
