@@ -24,7 +24,7 @@ export default function Dealer(props) {
           <img src={card.image} key={card.code} />
         )}
       </div>
-      <CardSum dealerCards={dealerCards} showDealerHandValue={true}/>
+      <CardSum dealerCards={dealerCards} showInDealer={true}/>
     </div>
   )
 }

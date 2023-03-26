@@ -56,7 +56,7 @@ function App() {
       <h2>BlackJack</h2>
       <div className="player-hand">
         {/* showHandvalue is used to control which part of the return of Card Sum gets rendered in app.js or in Dealer Component */}
-        <CardSum drawCards={drawCards} showHandValue={true} />
+        <CardSum drawCards={drawCards} showInApp={true} />
       </div>
       <div className="cards-display">
         {drawCards?.map((card) => (
