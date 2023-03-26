@@ -1,4 +1,5 @@
 import React from "react";
+import GameRules from "./GameRules";
 
 //CARD VALUES FOR FACE CARDS COME AS STRING OF TEXT SO NEED TO GIVE THEM A NUMBER EQUIVALENT
 const faceCardValues = {
@@ -30,13 +31,11 @@ export default function CardSum({ drawCards }) {
       }
     return handValueCheck(handValue);
   }
-  
-  
-  
 
   return (
     <div>
-        <h4>Hand Value : {handValueChecked(drawCards)} </h4>
+        {handValueChecked(drawCards) !== 0 && <h4>Hand Value : {handValueChecked(drawCards)} </h4>}
+        <GameRules handValue ={handValueChecked(drawCards)} />
     </div>
   );
 }
