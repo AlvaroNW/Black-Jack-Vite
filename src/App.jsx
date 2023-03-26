@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import CardSum from "./components/CardSum";
-
+import Dealer from "./components/Dealer";
 
 const NEW_DECK_ENDPOINT = "https://deckofcardsapi.com/api/deck/new/";
 const NEW_DECK_ENDPOINT_SIX_DECKS =
@@ -11,6 +11,7 @@ const REUSE_DECK_ENDPOINT = "https://deckofcardsapi.com/api/deck/";
 function App() {
   const [deckID, setDeckID] = useState();
   const [drawCards, setDrawCards] = useState([]);
+  const [inGame, setInGame] = useState(false);
 
   //Get 6 decks from API
   useEffect(() => {
@@ -31,38 +32,53 @@ function App() {
         console.log(data);
         setDrawCards(data.cards);
       });
+    setInGame(true);
   };
   const handleHit = () => {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=1`)
       .then((response) => response.json())
       .then((data) => {
         setDrawCards([...drawCards, ...data.cards]);
-        console.log(drawCards)
+        console.log(drawCards);
       });
   };
   function shuffleDeck() {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/shuffle`);
     setDrawCards([]);
+    setInGame(false);
+  }
+  function handleStand() {
+    setInGame(false);
   }
 
   return (
     <div className="App">
       <h2>BlackJack</h2>
-      <div className="player-hand"> 
+      <div className="player-hand">
         <CardSum drawCards={drawCards} />
       </div>
       <div className="cards-display">
-        {drawCards?.map((card) => (
+        {drawCards?.map((card) => 
           <img src={card.image} key={card.code} />
-        ))}
+        )}
       </div>
       <div className="control-buttons">
-        {drawCards.length === 0 && <button onClick={handleNewGame}>NEW ROUND</button>}
-        <button onClick={shuffleDeck}>SUFFLE</button>
-        <button onClick={handleHit}>HIT</button>
+        {drawCards.length === 0 && inGame !== true && (
+          <button onClick={handleNewGame}>NEW ROUND</button>
+        )}
+        {inGame !== true && drawCards.length !== 0 && (
+          <button onClick={shuffleDeck}>END ROUND</button>
+        )}
+        {inGame === true && drawCards.length !== 0 && (
+          <button onClick={handleStand}>Stand</button>
+        )}
+        {inGame === true && drawCards.length !== 0 && (
+          <button onClick={handleHit}>HIT</button>
+        )}
       </div>
-
-      
+      <div className="dealer">
+          <Dealer deckID={deckID} REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT} />
+      </div>
     </div>
   );
 }
