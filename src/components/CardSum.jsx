@@ -11,7 +11,7 @@ const faceCardValues = {
 
 
 
-export default function CardSum({ drawCards }) {
+export default function CardSum({ drawCards, showHandValue, showDealerHandValue, dealerCards }) {
 
   const handValueChecked = (drawCards)=>{
     // Calculating hand value
@@ -32,10 +32,36 @@ export default function CardSum({ drawCards }) {
     return handValueCheck(handValue);
   }
 
+  const dealerHandValueChecked = (dealerCards)=>{
+    // Calculating dealer's hand value
+    const dealerHandValue = dealerCards?.reduce((acc, currentCard) => {
+      const dealerCardValue = faceCardValues[currentCard.value] || parseInt(currentCard.value);
+      return acc +  dealerCardValue;
+      },0)
+
+      // checking for ACE's when over 21 points
+      let numAces = dealerCards?.filter(card => card.value === 'ACE').length;
+      function dealerHandValueCheck (dealerHandValue) {
+        while (dealerHandValue > 21 && numAces > 0) {
+          dealerHandValue -= 10;
+          numAces--;
+        }
+        return(dealerHandValue) 
+      }
+    return dealerHandValueCheck(dealerHandValue);
+  }
+
   return (
+    <>
     <div>
-        {handValueChecked(drawCards) !== 0 && <h4>Hand Value : {handValueChecked(drawCards)} </h4>}
+        {!showDealerHandValue && showHandValue && handValueChecked(drawCards) !== 0 && <h4>Hand Value : {handValueChecked(drawCards)} </h4>}
         <GameRules handValue ={handValueChecked(drawCards)} />
     </div>
+    <div>
+        {showDealerHandValue && !showHandValue && dealerHandValueChecked(dealerCards) !== 0 && <h4>Dealer Hand Value : {handValueChecked(dealerCards)} </h4>}
+        {/* <GameRules handValue ={dealerHandValueChecked(dealerCards)} /> */}
+    </div>
+    </>
+
   );
 }

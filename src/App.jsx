@@ -55,12 +55,13 @@ function App() {
     <div className="App">
       <h2>BlackJack</h2>
       <div className="player-hand">
-        <CardSum drawCards={drawCards} />
+        {/* showHandvalue is used to control which part of the return of Card Sum gets rendered in app.js or in Dealer Component */}
+        <CardSum drawCards={drawCards} showHandValue={true} />
       </div>
       <div className="cards-display">
-        {drawCards?.map((card) => 
+        {drawCards?.map((card) => (
           <img src={card.image} key={card.code} />
-        )}
+        ))}
       </div>
       <div className="control-buttons">
         {drawCards.length === 0 && inGame !== true && (
@@ -77,7 +78,7 @@ function App() {
         )}
       </div>
       <div className="dealer">
-          <Dealer deckID={deckID} REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT} />
+        <Dealer deckID={deckID} REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT} />
       </div>
     </div>
   );
