@@ -5,13 +5,13 @@ import React from "react";
 export default function GameRules(props) {
   let message;
     if (props.handValue <= 20 && props.handValue > 0){
-      message = <p>Do you want another card?</p>
+      message = 'Do you want another card?'
     }else if (props.handValue > 21){
-      message = <p>You busted out!</p>
+      message = 'You busted out!'
     }else if(props.handValue === 0){
-      message = <p>Do you want to play?</p>
+      message = 'Do you want to play?'
     }else{
-      message = <p>You got BlackJack!</p>
+      message = 'You got BlackJack!'
     }
   return <p>{message}</p>
 }

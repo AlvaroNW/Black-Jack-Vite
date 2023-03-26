@@ -11,6 +11,7 @@ const REUSE_DECK_ENDPOINT = "https://deckofcardsapi.com/api/deck/";
 function App() {
   const [deckID, setDeckID] = useState();
   const [drawCards, setDrawCards] = useState([]);
+  const [inGame, setInGame] = useState(false);
 
   //Get 6 decks from API
   useEffect(() => {
@@ -31,6 +32,7 @@ function App() {
         console.log(data);
         setDrawCards(data.cards);
       });
+    setInGame(true)
   };
   const handleHit = () => {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=1`)
@@ -43,6 +45,11 @@ function App() {
   function shuffleDeck() {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/shuffle`);
     setDrawCards([]);
+    setInGame(false);
+  }
+  function handleStand(){
+    setInGame(false);
+    
   }
 
   return (
@@ -57,9 +64,11 @@ function App() {
         ))}
       </div>
       <div className="control-buttons">
-        {drawCards.length === 0 && <button onClick={handleNewGame}>NEW ROUND</button>}
-        <button onClick={shuffleDeck}>SUFFLE</button>
-        <button onClick={handleHit}>HIT</button>
+        {drawCards.length === 0 && inGame !== true && <button onClick={handleNewGame}>NEW ROUND</button>}
+        {inGame !== true && drawCards.length !== 0 && <button onClick={shuffleDeck}>END ROUND</button>}
+        {inGame === true && drawCards.length !== 0 && <button onClick={handleStand}>Stand</button>}
+        {inGame === true && drawCards.length !== 0 && <button onClick={handleHit}>HIT</button>}
+
       </div>
 
       
