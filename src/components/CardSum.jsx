@@ -1,6 +1,7 @@
 import React from "react";
 import GameRules from "./GameRules";
 
+
 //CARD VALUES FOR FACE CARDS COME AS STRING OF TEXT SO NEED TO GIVE THEM A NUMBER EQUIVALENT
 const faceCardValues = {
   JACK: 10,
@@ -11,7 +12,7 @@ const faceCardValues = {
 
 
 
-export default function CardSum({ drawCards, showInApp, showInDealer, dealerCards, holeCard }) {
+export default function CardSum({ drawCards, showInApp, showInDealer, dealerCards, holeCard, updateDealerScore }) {
 
   const handValueChecked = (drawCards)=>{
     // Calculating hand value
@@ -48,8 +49,12 @@ export default function CardSum({ drawCards, showInApp, showInDealer, dealerCard
         }
         return(dealerHandValue) 
       }
+    updateDealerScore(dealerHandValueCheck(dealerHandValue))
     return dealerHandValueCheck(dealerHandValue);
   }
+
+
+
 
   return (
     <>

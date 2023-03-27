@@ -5,6 +5,8 @@ import CardSum from './CardSum';
 export default function Dealer(props) {
   const [dealerCards, setDealerCards] = useState([])
   const [holeCard, setHoleCard]= useState(true)
+  const [dealerScore, setDealerScore] = useState(0)
+  
 
   const dealerDraw = () => {
     fetch(`${props.REUSE_DECK_ENDPOINT}${props.deckID}/draw/?count=2`)
@@ -25,19 +27,25 @@ export default function Dealer(props) {
       setDealerCards([...dealerCards, ...data.cards]);
     });
   }
-
+  function updateDealerScore(score){
+    setDealerScore(score)
+    console.log(` the dealer score is ${dealerScore}`);
+  }
+  
   useEffect(() => {
     if(props.drawCards.length ===2){
+      setHoleCard(true)
       dealerDraw()
     }
   }, [props.drawCards])
 
   useEffect(() => {
-    if(props.stand){
+    if(props.stand && dealerScore <= 17){
       dealerHit()
+    }else if(props.stand  && dealerScore > 17 ){
+      setHoleCard(false);
     }
   }, [props.stand])
-  
   
 
   
@@ -52,7 +60,7 @@ export default function Dealer(props) {
           <img src={index === 1 && holeCard ? 'src/assets/cardback.png' : card.image} key={card.code} />
         )}
       </div>
-      <CardSum dealerCards={dealerCards} showInDealer={true} holeCard={holeCard}/>
+      <CardSum dealerCards={dealerCards} showInDealer={true} holeCard={holeCard} updateDealerScore={updateDealerScore} />
     </div>
   )
 }
