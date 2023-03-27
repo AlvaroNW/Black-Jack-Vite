@@ -1,4 +1,9 @@
 .holedHand img:nth-of-type(2) {
   width: 14em;
+  transition: opacity 0.2s ease-in-out;
+}
+.cards-display{
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
 }
 

@@ -12,6 +12,7 @@ export default function GameRules(props) {
       message = 'Do you want to play?'
     }else{
       message = 'You got BlackJack!'
+      handleStand()
     }
   return <p>{message}</p>
 }

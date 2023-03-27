@@ -12,6 +12,7 @@ function App() {
   const [deckID, setDeckID] = useState();
   const [drawCards, setDrawCards] = useState([]);
   const [inGame, setInGame] = useState(false);
+  const [stand, setStand] =useState(false)
 
   //Get 6 decks from API
   useEffect(() => {
@@ -49,6 +50,7 @@ function App() {
   }
   function handleStand() {
     setInGame(false);
+    setStand(true)
   }
 
   return (
@@ -56,7 +58,7 @@ function App() {
       <h2>BlackJack</h2>
       <div className="player-hand">
         {/* showHandvalue is used to control which part of the return of Card Sum gets rendered in app.js or in Dealer Component */}
-        <CardSum drawCards={drawCards} showInApp={true} />
+        <CardSum drawCards={drawCards} showInApp={true} handleStand={handleStand} />
       </div>
       <div className="cards-display">
         {drawCards?.map((card) => (
@@ -78,7 +80,7 @@ function App() {
         )}
       </div>
       <div className="dealer">
-        <Dealer deckID={deckID} REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT} />
+        <Dealer deckID={deckID} REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT} stand={stand} drawCards={drawCards} />
       </div>
     </div>
   );
