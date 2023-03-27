@@ -11,7 +11,7 @@ const faceCardValues = {
 
 
 
-export default function CardSum({ drawCards, showInApp, showInDealer, dealerCards }) {
+export default function CardSum({ drawCards, showInApp, showInDealer, dealerCards, holeCard }) {
 
   const handValueChecked = (drawCards)=>{
     // Calculating hand value
@@ -58,7 +58,7 @@ export default function CardSum({ drawCards, showInApp, showInDealer, dealerCard
         {showInApp && <GameRules handValue ={handValueChecked(drawCards)} />}
     </div>
     <div>
-        {showInDealer && !showInApp && dealerHandValueChecked(dealerCards) !== 0 && <h4>Dealer Hand Value : {handValueChecked(dealerCards)} </h4>}
+        {!holeCard && showInDealer && !showInApp && dealerHandValueChecked(dealerCards) !== 0 && <h4>Dealer's Hand Value : {handValueChecked(dealerCards)} </h4>}
     </div>
     </>
 
