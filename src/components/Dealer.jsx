@@ -75,14 +75,12 @@ export default function Dealer(props) {
     
     <div>
       <h3>Dealer</h3>
-      <button onClick={dealerDraw}>Dealer Turn</button>
-      <button onClick={dealerHit}>Dealer HIT</button>
+      <CardSum dealerCards={dealerCards} showInDealer={true} holeCard={holeCard} dealerHandValueChecked={dealerHandValueChecked} />
       <div className={holeCard ? 'holedHand' :'cards-display'}>
         {dealerCards?.map((card, index) =>
           <img src={index === 1 && holeCard ? 'src/assets/cardback.png' : card.image} key={card.code} />
         )}
       </div>
-      <CardSum dealerCards={dealerCards} showInDealer={true} holeCard={holeCard} dealerHandValueChecked={dealerHandValueChecked} />
     </div>
   )
 }
