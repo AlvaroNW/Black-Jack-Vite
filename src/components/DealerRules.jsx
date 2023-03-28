@@ -2,8 +2,6 @@ import React from 'react'
 
 export default function DealerRules({dealerHandvalue}) {
   
-
-
   let dealerMessage;
     
     if (dealerHandvalue <= 20 && dealerHandvalue > 17){
