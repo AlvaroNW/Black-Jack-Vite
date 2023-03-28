@@ -11,7 +11,7 @@ export default function CardSum({
   holeCard,
   dealerHandValueChecked,
   inGame,
-  handleStand,
+  handleHandValue,
 }) {
   const handValueChecked = (drawCards) => {
     // Calculating hand value
@@ -59,7 +59,7 @@ export default function CardSum({
         {showInApp && inGame && (
           <GameRules
             handValue={handValueChecked(drawCards)}
-            handleStand={handleStand}
+            handleHandValue={handleHandValue}
           />
         )}
       </div>

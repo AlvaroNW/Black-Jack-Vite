@@ -56,13 +56,27 @@ function App() {
   }
 
 
+  const handleHandValue = (handValue) => {
+    if (handValue <= 20 && handValue > 0) {
+      setStand(false);
+    } else if (handValue > 21) {
+      setInGame(false);
+      setStand(true);
+    } else if (handValue === 0) {
+      setStand(false);
+    } else {
+      setInGame(false);
+      setStand(true);
+    }
+  };
+
 
   return (
     <div className="App">
       <h2>BlackJack</h2>
       <div className="player-hand">
         {/* showHandvalue is used to control which part of the return of Card Sum gets rendered in app.js or in Dealer Component */}
-        <CardSum drawCards={drawCards} showInApp={true} handleStand={handleStand} stand={stand} inGame={inGame} />
+        <CardSum drawCards={drawCards} showInApp={true} handleHandValue={handleHandValue} stand={stand} inGame={inGame} />
       </div>
       <div className="cards-display">
         {drawCards?.map((card) => (
