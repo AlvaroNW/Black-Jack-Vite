@@ -27,7 +27,7 @@ function App() {
 
   console.log(deckID);
 
-  const handleNewGame = () => {
+  const handleNewRound = () => {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=2`)
       .then((response) => response.json())
       .then((data) => {
@@ -56,13 +56,27 @@ function App() {
   }
 
 
+  const handleHandValue = (handValue) => {
+    if (handValue <= 20 && handValue > 0) {
+      setStand(false);
+    } else if (handValue > 21) {
+      setInGame(false);
+      setStand(true);
+    } else if (handValue === 0) {
+      setStand(false);
+    } else {
+      setInGame(false);
+      setStand(true);
+    }
+  };
+
 
   return (
     <div className="App">
       <h2>BlackJack</h2>
       <div className="player-hand">
         {/* showHandvalue is used to control which part of the return of Card Sum gets rendered in app.js or in Dealer Component */}
-        <CardSum drawCards={drawCards} showInApp={true} handleStand={handleStand} />
+        <CardSum drawCards={drawCards} showInApp={true} handleHandValue={handleHandValue} stand={stand} inGame={inGame} />
       </div>
       <div className="cards-display">
         {drawCards?.map((card) => (
@@ -71,7 +85,7 @@ function App() {
       </div>
       <div className="control-buttons">
         {drawCards.length === 0 && inGame !== true && (
-          <button onClick={handleNewGame}>NEW ROUND</button>
+          <button onClick={handleNewRound}>NEW ROUND</button>
         )}
         {inGame !== true && drawCards.length !== 0 && (
           <button onClick={shuffleDeck}>END ROUND</button>
@@ -84,7 +98,7 @@ function App() {
         )}
       </div>
       <div className="dealer">
-        <Dealer deckID={deckID} REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT} stand={stand} drawCards={drawCards}  />
+        <Dealer deckID={deckID} REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT}  stand={stand} drawCards={drawCards}  />
       </div>
     </div>
   );
