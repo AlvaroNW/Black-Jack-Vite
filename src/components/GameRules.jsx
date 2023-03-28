@@ -1,7 +1,5 @@
 import React from "react";
 
-
-
 export default function GameRules(props) {
   let message;
     if (props.handValue <= 20 && props.handValue > 0){

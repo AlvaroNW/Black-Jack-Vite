@@ -1,11 +1,11 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import CardSum from './CardSum';
+import { faceCardValues } from './faceCardValues';
 
 export default function Dealer(props) {
   const [dealerCards, setDealerCards] = useState([])
   const [holeCard, setHoleCard]= useState(true)
-  const [dealerScore, setDealerScore] = useState(0)
   
 
   const dealerDraw = () => {
@@ -27,10 +27,6 @@ export default function Dealer(props) {
       setDealerCards([...dealerCards, ...data.cards]);
     });
   }
-  function updateDealerScore(score){
-    setDealerScore(score)
-    console.log(` the dealer score is ${dealerScore}`);
-  }
   
   useEffect(() => {
     if(props.drawCards.length ===2){
@@ -39,16 +35,42 @@ export default function Dealer(props) {
     }
   }, [props.drawCards])
 
+
+  const dealerHandValueChecked = (dealerCards)=>{
+    // Calculating dealer's hand value
+    const dealerHandValue = dealerCards?.reduce((acc, currentCard) => {
+      const dealerCardValue = faceCardValues[currentCard.value] || parseInt(currentCard.value);
+      return acc +  dealerCardValue;
+      },0)
+
+      // checking for ACE's when over 21 points
+      let numAces = dealerCards?.filter(card => card.value === 'ACE').length;
+      function dealerHandValueCheck (dealerHandValue) {
+        while (dealerHandValue > 21 && numAces > 0) {
+          dealerHandValue -= 10;
+          numAces--;
+        }
+        return(dealerHandValue) 
+      }
+    return dealerHandValueCheck(dealerHandValue);
+  }
+
+
   useEffect(() => {
-    if(props.stand && dealerScore <= 17){
-      dealerHit()
-    }else if(props.stand  && dealerScore > 17 ){
-      setHoleCard(false);
-    }
+    setHoleCard(false);
+    
   }, [props.stand])
   
 
-  
+  useEffect(() => {
+    if(props.stand && dealerHandValueChecked(dealerCards)<17){
+      dealerHit()
+    }
+  }, [props.stand])
+
+
+
+
   return (
     
     <div>
@@ -60,7 +82,7 @@ export default function Dealer(props) {
           <img src={index === 1 && holeCard ? 'src/assets/cardback.png' : card.image} key={card.code} />
         )}
       </div>
-      <CardSum dealerCards={dealerCards} showInDealer={true} holeCard={holeCard} updateDealerScore={updateDealerScore} />
+      <CardSum dealerCards={dealerCards} showInDealer={true} holeCard={holeCard} dealerHandValueChecked={dealerHandValueChecked} />
     </div>
   )
 }

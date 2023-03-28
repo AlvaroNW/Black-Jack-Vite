@@ -12,7 +12,8 @@ function App() {
   const [deckID, setDeckID] = useState();
   const [drawCards, setDrawCards] = useState([]);
   const [inGame, setInGame] = useState(false);
-  const [stand, setStand] =useState(false)
+  const [stand, setStand] = useState(false);
+  
 
   //Get 6 decks from API
   useEffect(() => {
@@ -34,6 +35,7 @@ function App() {
         setDrawCards(data.cards);
       });
     setInGame(true);
+    setStand(false)
   };
   const handleHit = () => {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=1`)
@@ -82,7 +84,7 @@ function App() {
         )}
       </div>
       <div className="dealer">
-        <Dealer deckID={deckID} REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT} stand={stand} drawCards={drawCards} />
+        <Dealer deckID={deckID} REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT} stand={stand} drawCards={drawCards}  />
       </div>
     </div>
   );

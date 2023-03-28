@@ -1,18 +1,9 @@
 import React from "react";
 import GameRules from "./GameRules";
+import { faceCardValues } from '../components/faceCardValues';
 
 
-//CARD VALUES FOR FACE CARDS COME AS STRING OF TEXT SO NEED TO GIVE THEM A NUMBER EQUIVALENT
-const faceCardValues = {
-  JACK: 10,
-  QUEEN: 10,
-  KING: 10,
-  ACE: 11,
-};
-
-
-
-export default function CardSum({ drawCards, showInApp, showInDealer, dealerCards, holeCard, updateDealerScore }) {
+export default function CardSum({ drawCards, showInApp, showInDealer, dealerCards, holeCard, dealerHandValueChecked }) {
 
   const handValueChecked = (drawCards)=>{
     // Calculating hand value
@@ -32,29 +23,6 @@ export default function CardSum({ drawCards, showInApp, showInDealer, dealerCard
       }
     return handValueCheck(handValue);
   }
-
-  const dealerHandValueChecked = (dealerCards)=>{
-    // Calculating dealer's hand value
-    const dealerHandValue = dealerCards?.reduce((acc, currentCard) => {
-      const dealerCardValue = faceCardValues[currentCard.value] || parseInt(currentCard.value);
-      return acc +  dealerCardValue;
-      },0)
-
-      // checking for ACE's when over 21 points
-      let numAces = dealerCards?.filter(card => card.value === 'ACE').length;
-      function dealerHandValueCheck (dealerHandValue) {
-        while (dealerHandValue > 21 && numAces > 0) {
-          dealerHandValue -= 10;
-          numAces--;
-        }
-        return(dealerHandValue) 
-      }
-    updateDealerScore(dealerHandValueCheck(dealerHandValue))
-    return dealerHandValueCheck(dealerHandValue);
-  }
-
-
-
 
   return (
     <>
