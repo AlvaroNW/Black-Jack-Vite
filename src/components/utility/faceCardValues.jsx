@@ -1,5 +1,4 @@
-  
-  
+
   //CARD VALUES FOR FACE CARDS COME AS STRING OF TEXT SO NEED TO GIVE THEM A NUMBER EQUIVALENT
   export const faceCardValues = {
     JACK: 10,

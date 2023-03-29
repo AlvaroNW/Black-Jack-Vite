@@ -2,15 +2,15 @@ import React from "react";
 import { useEffect, useState } from "react";
 import CardSum from "./components/CardSum";
 import Dealer from "./components/Dealer";
+import GameResult from "./components/utility/GameResult";
 
-const NEW_DECK_ENDPOINT = "https://deckofcardsapi.com/api/deck/new/";
 const NEW_DECK_ENDPOINT_SIX_DECKS =
   "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6";
 const REUSE_DECK_ENDPOINT = "https://deckofcardsapi.com/api/deck/";
 
 function App() {
   const [deckID, setDeckID] = useState();
-  const [drawCards, setDrawCards] = useState([]);
+  const [drawCards, setDrawCards] = useState([]); //AKA player Cards
   const [inGame, setInGame] = useState(false);
   const [stand, setStand] = useState(false);
   
@@ -20,7 +20,6 @@ function App() {
     fetch(NEW_DECK_ENDPOINT_SIX_DECKS)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setDeckID(data.deck_id);
       });
   }, []);
@@ -55,8 +54,8 @@ function App() {
     setStand(true)
   }
 
-
   const handleHandValue = (handValue) => {
+    console.log(`Handvalue from app ${handValue}`)
     if (handValue <= 20 && handValue > 0) {
       setStand(false);
     } else if (handValue > 21) {
@@ -69,7 +68,6 @@ function App() {
       setStand(true);
     }
   };
-
 
   return (
     <div className="App">
@@ -100,6 +98,7 @@ function App() {
       <div className="dealer">
         <Dealer deckID={deckID} REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT}  stand={stand} drawCards={drawCards}  />
       </div>
+      <GameResult />
     </div>
   );
 }

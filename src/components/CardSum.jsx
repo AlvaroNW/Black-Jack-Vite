@@ -1,18 +1,11 @@
 import React from "react";
 import GameRules from "./GameRules";
-import { faceCardValues } from "../components/faceCardValues";
+import { faceCardValues } from "./utility/faceCardValues";
 import DealerRules from "./DealerRules";
+import GameResult from "../components/utility/GameResult";
 
-export default function CardSum({
-  drawCards,
-  showInApp,
-  showInDealer,
-  dealerCards,
-  holeCard,
-  dealerHandValueChecked,
-  inGame,
-  handleHandValue,
-}) {
+export default function CardSum({drawCards, showInApp,showInDealer,dealerCards,holeCard,dealerHandValueChecked,inGame,handleHandValue,}) {
+  
   const handValueChecked = (drawCards) => {
     // Calculating hand value
     const handValue = drawCards?.reduce((acc, currentCard) => {
@@ -32,6 +25,9 @@ export default function CardSum({
     }
     return handValueCheck(handValue);
   };
+const playerValue =  handValueChecked(drawCards)
+console.log(playerValue);
+
 
   return (
     /*
@@ -74,6 +70,11 @@ export default function CardSum({
           <DealerRules dealerHandvalue={dealerHandValueChecked(dealerCards)} />
         )}
       </div>
+
+      <GameResult
+        dealerHandValue={handValueChecked(dealerCards)}
+        playerValue={playerValue}
+      />
     </>
   );
 }
