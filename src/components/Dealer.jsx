@@ -59,9 +59,14 @@ export default function Dealer(props) {
 
   useEffect(() => {
     if (props.stand && dealerHandValueChecked(dealerCards) < 17) {
-      dealerHit();
+      const timeoutID = setTimeout(() => {
+        dealerHit();
+      }, 2000);
+      return () => {
+        clearTimeout(timeoutID);
+      };
     }
-  }, [props.stand]);
+  }, [props.stand, dealerHit]);
 
   return (
     <div>

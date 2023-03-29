@@ -33,7 +33,7 @@ function App() {
         setDrawCards(data.cards);
       });
     setInGame(true);
-    setStand(false)
+    setStand(false);
   };
   const handleHit = () => {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=1`)
@@ -46,11 +46,10 @@ function App() {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=1`)
       .then((response) => response.json())
       .then((data) => {
-        setDrawCards([...drawCards, ...data.cards])
-        
+        setDrawCards([...drawCards, ...data.cards]);
       });
-      setInGame(false);
-      setStand(true)
+    setInGame(false);
+    setStand(true);
   };
   function shuffleDeck() {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/shuffle`);
@@ -59,7 +58,7 @@ function App() {
   }
   function handleStand() {
     setInGame(false);
-    setStand(true)
+    setStand(true);
   }
 
   const handleHandValue = (handValue) => {
@@ -81,7 +80,13 @@ function App() {
       <h2>BlackJack</h2>
       <div className="player-hand">
         {/* showHandvalue is used to control which part of the return of Card Sum gets rendered in app.js or in Dealer Component */}
-        <CardSum drawCards={drawCards} showInApp={true} handleHandValue={handleHandValue} stand={stand} inGame={inGame} />
+        <CardSum
+          drawCards={drawCards}
+          showInApp={true}
+          handleHandValue={handleHandValue}
+          stand={stand}
+          inGame={inGame}
+        />
       </div>
       <div className="cards-display">
         {drawCards?.map((card) => (
@@ -101,12 +106,17 @@ function App() {
         {inGame === true && drawCards.length !== 0 && (
           <button onClick={handleHit}>HIT</button>
         )}
-      	{inGame === true && drawCards.length !== 0 && (
+        {inGame === true && drawCards.length !== 0 && (
           <button onClick={handleDoubleDown}>DOUBLE DOWN</button>
         )}
       </div>
       <div className="dealer">
-        <Dealer deckID={deckID} REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT} stand={stand} drawCards={drawCards}  />
+        <Dealer
+          deckID={deckID}
+          REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT}
+          stand={stand}
+          drawCards={drawCards}
+        />
       </div>
     </div>
   );

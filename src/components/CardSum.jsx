@@ -1,14 +1,20 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import GameRules from "./GameRules";
 import { faceCardValues } from "./utility/faceCardValues";
 import DealerRules from "./DealerRules";
 import GameResult from "./GameResult";
 
-
-
-export default function CardSum({drawCards, showInApp,showInDealer,dealerCards,holeCard,dealerHandValueChecked,inGame,handleHandValue,}) {
-  
-  const [playerHandValueState, setplayerHandValueState] = useState(0)
+export default function CardSum({
+  drawCards,
+  showInApp,
+  showInDealer,
+  dealerCards,
+  holeCard,
+  dealerHandValueChecked,
+  inGame,
+  handleHandValue,
+}) {
+  const [playerHandValueState, setplayerHandValueState] = useState(0);
 
   const handValueChecked = (drawCards) => {
     // Calculating hand value
@@ -20,7 +26,7 @@ export default function CardSum({drawCards, showInApp,showInDealer,dealerCards,h
 
     // checking for ACE's when over 21 points
     let numAces = drawCards?.filter((card) => card.value === "ACE").length;
-    
+
     function handValueCheck(handValue) {
       while (handValue > 21 && numAces > 0) {
         handValue -= 10;
@@ -28,18 +34,14 @@ export default function CardSum({drawCards, showInApp,showInDealer,dealerCards,h
       }
       return handValue;
     }
-    
+
     return handValueCheck(handValue);
   };
 
-
   //needed to wait for draw cards to finish before passing it as prop
   useEffect(() => {
-    drawCards && setplayerHandValueState(handValueChecked(drawCards))
-
-
-  }, [drawCards])
-
+    drawCards && setplayerHandValueState(handValueChecked(drawCards));
+  }, [drawCards]);
 
   return (
     /*
@@ -84,9 +86,10 @@ export default function CardSum({drawCards, showInApp,showInDealer,dealerCards,h
       </div>
 
       {showInApp && !inGame && drawCards.length !== 0 && (
-        < GameResult
-        dealerHandValue={handValueChecked(dealerCards)}
-        playerValue={handValueChecked(drawCards)}/>
+        <GameResult
+          dealerHandValue={handValueChecked(dealerCards)}
+          playerValue={handValueChecked(drawCards)}
+        />
       )}
     </>
   );
