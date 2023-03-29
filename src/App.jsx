@@ -14,7 +14,7 @@ function App() {
   const [inGame, setInGame] = useState(false);
   const [stand, setStand] = useState(false);
   const [showDealer, setShowDealer] = useState(false)
-  const [showEndgame, setShowEndgame] = useState(true)
+  const [showEndgame, setShowEndgame] = useState(false)
 
   //Get 6 decks from API
   useEffect(() => {
