@@ -53,6 +53,7 @@ function App() {
         setDrawCards([...drawCards, ...data.cards]);
       });
     setStand(true);
+    setInGame(false);
   };
   function shuffleDeck() {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/shuffle`);
