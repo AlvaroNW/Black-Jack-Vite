@@ -1,18 +1,15 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import GameRules from "./GameRules";
-import { faceCardValues } from "../components/faceCardValues";
+import { faceCardValues } from "./utility/faceCardValues";
 import DealerRules from "./DealerRules";
+import GameResult from "./GameResult";
 
-export default function CardSum({
-  drawCards,
-  showInApp,
-  showInDealer,
-  dealerCards,
-  holeCard,
-  dealerHandValueChecked,
-  inGame,
-  handleHandValue,
-}) {
+
+
+export default function CardSum({drawCards, showInApp,showInDealer,dealerCards,holeCard,dealerHandValueChecked,inGame,handleHandValue,}) {
+  
+  const [playerHandValueState, setplayerHandValueState] = useState(0)
+
   const handValueChecked = (drawCards) => {
     // Calculating hand value
     const handValue = drawCards?.reduce((acc, currentCard) => {
@@ -23,6 +20,7 @@ export default function CardSum({
 
     // checking for ACE's when over 21 points
     let numAces = drawCards?.filter((card) => card.value === "ACE").length;
+    
     function handValueCheck(handValue) {
       while (handValue > 21 && numAces > 0) {
         handValue -= 10;
@@ -30,8 +28,18 @@ export default function CardSum({
       }
       return handValue;
     }
+    
     return handValueCheck(handValue);
   };
+
+
+  //needed to wait for draw cards to finish before passing it as prop
+  useEffect(() => {
+    drawCards && setplayerHandValueState(handValueChecked(drawCards))
+
+
+  }, [drawCards])
+
 
   return (
     /*
@@ -46,19 +54,19 @@ export default function CardSum({
         */
     <>
       <div>
-        {!showInDealer && showInApp && handValueChecked(drawCards) !== 0 && (
+        {!showInDealer && showInApp && playerHandValueState !== 0 && (
           <h4>
             Hand Value :{" "}
-            {handValueChecked(drawCards) === 21
+            {playerHandValueState === 21
               ? "21! you got BlackJack!"
-              : handValueChecked(drawCards) > 21
-              ? `${handValueChecked(drawCards)} You busted out!`
-              : handValueChecked(drawCards)}
+              : playerHandValueState > 21
+              ? `${playerHandValueState} You busted out!`
+              : playerHandValueState}
           </h4>
         )}
         {showInApp && inGame && (
           <GameRules
-            handValue={handValueChecked(drawCards)}
+            handValue={playerHandValueState}
             handleHandValue={handleHandValue}
           />
         )}
@@ -74,6 +82,12 @@ export default function CardSum({
           <DealerRules dealerHandvalue={dealerHandValueChecked(dealerCards)} />
         )}
       </div>
+
+      {showInApp && !inGame && drawCards.length !== 0 && (
+        < GameResult
+        dealerHandValue={handValueChecked(dealerCards)}
+        playerValue={handValueChecked(drawCards)}/>
+      )}
     </>
   );
 }

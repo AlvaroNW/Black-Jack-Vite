@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import CardSum from "./CardSum";
-import { faceCardValues } from "./faceCardValues";
+import { faceCardValues } from "./utility/faceCardValues";
 
 export default function Dealer(props) {
   const [dealerCards, setDealerCards] = useState([]);
