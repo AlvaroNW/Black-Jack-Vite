@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import CardSum from "./components/CardSum";
 import Dealer from "./components/Dealer";
-import GameResult from "./components/GameResult";
+
 
 const NEW_DECK_ENDPOINT_SIX_DECKS =
   "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6";
@@ -13,6 +13,8 @@ function App() {
   const [drawCards, setDrawCards] = useState([]); //AKA player Cards
   const [inGame, setInGame] = useState(false);
   const [stand, setStand] = useState(false);
+  const [showDealer, setShowDealer] = useState(false)
+  const [showEndgame, setShowEndgame] = useState(true)
 
   //Get 6 decks from API
   useEffect(() => {
@@ -34,6 +36,8 @@ function App() {
       });
     setInGame(true);
     setStand(false);
+    setShowDealer(true);
+    ;
   };
   const handleHit = () => {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=1`)
@@ -48,18 +52,23 @@ function App() {
       .then((data) => {
         setDrawCards([...drawCards, ...data.cards]);
       });
-    setInGame(false);
     setStand(true);
   };
   function shuffleDeck() {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/shuffle`);
     setDrawCards([]);
     setInGame(false);
+    setShowDealer(false)
+    setShowEndgame(false);
   }
   function handleStand() {
     setInGame(false);
     setStand(true);
   }
+
+  const handleEndRound = () => {
+    setShowEndgame(true);
+  };
 
   const handleHandValue = (handValue) => {
     if (handValue <= 20 && handValue > 0) {
@@ -97,7 +106,7 @@ function App() {
         {drawCards.length === 0 && inGame !== true && (
           <button onClick={handleNewRound}>NEW ROUND</button>
         )}
-        {inGame !== true && drawCards.length !== 0 && (
+        {showEndgame && drawCards.length !== 0 && (
           <button onClick={shuffleDeck}>END ROUND</button>
         )}
         {inGame === true && drawCards.length !== 0 && (
@@ -111,12 +120,13 @@ function App() {
         )}
       </div>
       <div className="dealer">
-        <Dealer
+        {showDealer && <Dealer
           deckID={deckID}
           REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT}
           stand={stand}
           drawCards={drawCards}
-        />
+          handleEndRound={handleEndRound}
+        />}
       </div>
     </div>
   );

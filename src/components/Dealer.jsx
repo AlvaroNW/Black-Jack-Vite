@@ -64,7 +64,9 @@ export default function Dealer(props) {
       }, 2000);
       return () => {
         clearTimeout(timeoutID);
-      };
+      }
+    }else if (props.stand && dealerHandValueChecked(dealerCards) > 17){
+      props.handleEndRound()
     }
   }, [props.stand, dealerHit]);
 
