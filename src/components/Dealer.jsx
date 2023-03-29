@@ -6,6 +6,7 @@ import { faceCardValues } from "./utility/faceCardValues";
 export default function Dealer(props) {
   const [dealerCards, setDealerCards] = useState([]);
   const [holeCard, setHoleCard] = useState(true);
+  const [isTimeoutActive, setIsTimeoutActive] = useState(false)
 
   const dealerDraw = () => {
     fetch(`${props.REUSE_DECK_ENDPOINT}${props.deckID}/draw/?count=2`)
@@ -59,13 +60,30 @@ export default function Dealer(props) {
 
   useEffect(() => {
     if (props.stand && dealerHandValueChecked(dealerCards) < 17) {
-      dealerHit();
+      setIsTimeoutActive(true);
+      const timeoutID = setTimeout(() => {
+        setIsTimeoutActive(false);
+        dealerHit();
+      }, 2000);
+      return () => {
+        clearTimeout(timeoutID);
+      }
+    }else if (props.stand && dealerHandValueChecked(dealerCards) > 17){
+      
+      props.handleEndRound()
     }
-  }, [props.stand]);
+  }, [props.stand, dealerHit]);
+
+  useEffect(() => {
+    if (dealerHandValueChecked(dealerCards) >= 17) {
+      setIsTimeoutActive(false);
+    }
+  }, [dealerCards]);
 
   return (
     <div>
       <h3>Dealer</h3>
+      {isTimeoutActive && <p>Dealer will draw another card...</p>}
       <CardSum
         dealerCards={dealerCards}
         showInDealer={true}
