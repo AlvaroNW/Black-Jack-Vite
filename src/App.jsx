@@ -14,8 +14,6 @@ function App() {
   const [inGame, setInGame] = useState(false);
   const [stand, setStand] = useState(false);
 
-  
-
   //Get 6 decks from API
   useEffect(() => {
     fetch(NEW_DECK_ENDPOINT_SIX_DECKS)
@@ -42,8 +40,17 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setDrawCards([...drawCards, ...data.cards]);
-        console.log(drawCards);
       });
+  };
+  const handleDoubleDown = () => {
+    fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=1`)
+      .then((response) => response.json())
+      .then((data) => {
+        setDrawCards([...drawCards, ...data.cards])
+        
+      });
+      setInGame(false);
+      setStand(true)
   };
   function shuffleDeck() {
     fetch(`${REUSE_DECK_ENDPOINT}${deckID}/shuffle`);
@@ -93,6 +100,9 @@ function App() {
         )}
         {inGame === true && drawCards.length !== 0 && (
           <button onClick={handleHit}>HIT</button>
+        )}
+      	{inGame === true && drawCards.length !== 0 && (
+          <button onClick={handleDoubleDown}>DOUBLE DOWN</button>
         )}
       </div>
       <div className="dealer">
