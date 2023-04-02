@@ -1,11 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import { cardDraw, cardHit } from "../utility/APICalls";
+import {  DealerHandValueCalc } from '../utility/calcUtils';
 
 import DealerHand from "./DealerHand";
 
 export default function Dealer({dealerCards, setDealerCards, deckID, stand, playerCards}) {
   const [holeCard, setHoleCard] = useState(true);
   const [isTimeoutActive, setIsTimeoutActive] = useState(false)
+
+  const dealerHandValue = DealerHandValueCalc(dealerCards);
 
   const handleDealerDraw = async() => {
     const dealerDraw = await cardDraw(deckID);
@@ -19,6 +22,7 @@ export default function Dealer({dealerCards, setDealerCards, deckID, stand, play
 
   useEffect(() => {
     if (playerCards.length === 2) {
+      setHoleCard(true)
       handleDealerDraw();
     }
   }, [playerCards])
@@ -28,27 +32,27 @@ export default function Dealer({dealerCards, setDealerCards, deckID, stand, play
   }, [stand])
 
 
-  // useEffect(() => {
-  //   if (stand && dealerHandValue < 17) {
-  //     setIsTimeoutActive(true);
-  //     const timeoutID = setTimeout(() => {
-  //       setIsTimeoutActive(false);
-  //       handleDealerHit();
-  //     }, 2000);
-  //     return () => {
-  //       clearTimeout(timeoutID);
-  //     }
-  //   }else if (props.stand && dealerHandValueChecked(dealerCards) > 17){
+  useEffect(() => {
+    if (stand && dealerHandValue < 17) {
+      setIsTimeoutActive(true);
+      const timeoutID = setTimeout(() => {
+        setIsTimeoutActive(false);
+        handleDealerHit();
+      }, 2000);
+      return () => {
+        clearTimeout(timeoutID);
+      }
+    }else if (stand && dealerHandValue > 17){
       
-  //     // props.handleEndRound()
-  //   }
-  // }, [props.stand, handleDealerHit]);
+      // props.handleEndRound()
+    }
+  }, [stand, handleDealerHit]);
 
 
   return (
     <div className="dealer-hand-display">
       DEALER
-      <DealerHand dealerCards={dealerCards}/>
+      <DealerHand dealerCards={dealerCards} holeCard={holeCard}/>
     </div>
   )
 }

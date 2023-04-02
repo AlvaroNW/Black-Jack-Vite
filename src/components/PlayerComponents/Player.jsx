@@ -27,6 +27,9 @@ export default function Player({setStand, playerCards, setPlayerCards, deckID,  
   const handleNewGame = async () => {
     const playerHit = await shuffleDeck(deckID);
   }
+  const handleStand = () => {
+    setStand(true)
+  }
 
 
   return (
@@ -37,6 +40,7 @@ export default function Player({setStand, playerCards, setPlayerCards, deckID,  
     <div className="player-controls">
       <button onClick={handleNewDeck}>PLAY</button>
       <button onClick={handlePlayerDraw}>Player Draw</button>
+      <button onClick={handleStand}>STAND</button>
       <button onClick={handlePlayerHit}>Player Hit</button>
       <button onClick={handleDoubleDown}>DoubleDown</button>
       <button onClick={handleNewGame}>NEW GAME</button>

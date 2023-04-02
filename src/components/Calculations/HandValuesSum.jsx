@@ -11,6 +11,7 @@ export default function HandValuesSum({playerCards, dealerCards}) {
   return (
     <div>
       <h4>Player's Hand Value: {playerHandValue}</h4>
+      <h4>Dealer's Hand Value: {dealerHandValue}</h4>
     </div>
   )
 }
