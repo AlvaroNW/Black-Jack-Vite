@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Dealer from "./components/DealerComponents/Dealer";
 import Player from "./components/PlayerComponents/Player";
 import HandValuesSum from "./components/Calculations/HandValuesSum";
+import ShowWinner from "./components/Calculations/ShowWinner";
 
 const NEW_DECK_ENDPOINT_SIX_DECKS =
   "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6";
@@ -90,6 +91,10 @@ function App() {
 
   return (
     <>
+
+        <div>
+          < ShowWinner />
+        </div>
         <div>
         <HandValuesSum
           playerCards={playerCards}
