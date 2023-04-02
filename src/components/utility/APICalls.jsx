@@ -12,13 +12,13 @@ async function getNewDeck() {
   
 }
 
-async function playerCardDraw(deckID) {
+async function cardDraw(deckID) {
   const response = await fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=2`);
   const data = await response.json();
   console.log(data.cards);
   return data.cards;
 }
-async function playerCardHit(deckID) {
+async function cardHit(deckID) {
   const response = await fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=1`);
   const data = await response.json();
   console.log(data.cards);
@@ -29,4 +29,4 @@ async function shuffleDeck(deckID) {
   await fetch(`${REUSE_DECK_ENDPOINT}${deckID}/shuffle`);
 }
 
-export { playerCardDraw, getNewDeck, shuffleDeck, playerCardHit };
+export { cardDraw, getNewDeck, shuffleDeck, cardHit };

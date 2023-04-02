@@ -1,14 +1,9 @@
-import { getNewDeck, playerCardDraw,playerCardHit, shuffleDeck } from "../utility/API/PlayerCalls";
-import react,{useState, useEffect} from "react";
-
+import { getNewDeck, cardDraw, cardHit, shuffleDeck } from "../utility/APICalls";
 
 import React from 'react'
 import PlayerHand from "./PlayerHand";
 
-export default function Player({setStand}) {
-  const [deckID, setDeckID] = useState();
-  const [playerCards, setPlayerCards] = useState([])
-
+export default function Player({setStand, playerCards, setPlayerCards, deckID,  setDeckID}) {
 
   // functions come from utility/API/PlayerCalls.js, returning the data from the API
   const handleNewDeck = async () => {
@@ -16,21 +11,22 @@ export default function Player({setStand}) {
     setDeckID(newDeck);
   }
   const handlePlayerDraw = async () => {
-    const playerDraw = await playerCardDraw(deckID);
+    const playerDraw = await cardDraw(deckID);
     setPlayerCards(playerDraw);
   }
   const handlePlayerHit = async () => {
-    const playerHit = await playerCardHit(deckID);
+    const playerHit = await cardHit(deckID);
     setPlayerCards([...playerCards, ...playerHit]);
 
   }
   const handleDoubleDown = async () => {
-    const playerHit = await playerCardHit(deckID);
+    const playerHit = await cardHit(deckID);
     setPlayerCards([...playerCards, ...playerHit]);
     setStand(true)
   }
-
-
+  const handleNewGame = async () => {
+    const playerHit = await shuffleDeck(deckID);
+  }
 
 
   return (
@@ -39,10 +35,11 @@ export default function Player({setStand}) {
       <PlayerHand playerCards={playerCards}/>
     </div>
     <div className="player-controls">
-      <button onClick={handleNewDeck}>Get New Deck</button>
+      <button onClick={handleNewDeck}>PLAY</button>
       <button onClick={handlePlayerDraw}>Player Draw</button>
       <button onClick={handlePlayerHit}>Player Hit</button>
       <button onClick={handleDoubleDown}>DoubleDown</button>
+      <button onClick={handleNewGame}>NEW GAME</button>
     </div>
     </>
   )
