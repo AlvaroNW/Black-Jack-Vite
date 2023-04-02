@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Dealer from "./components/DealerComponents/Dealer";
 import Player from "./components/PlayerComponents/Player";
-import HandValuesSum from "./components/HandValues/HandValuesSum";
+import HandValuesSum from "./components/Calculations/HandValuesSum";
 
 const NEW_DECK_ENDPOINT_SIX_DECKS =
   "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6";

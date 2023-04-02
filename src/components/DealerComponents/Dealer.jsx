@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { cardDraw, cardHit } from "../utility/APICalls";
+
 import DealerHand from "./DealerHand";
 
 export default function Dealer({dealerCards, setDealerCards, deckID, stand, playerCards}) {
@@ -28,20 +29,20 @@ export default function Dealer({dealerCards, setDealerCards, deckID, stand, play
 
 
   // useEffect(() => {
-  //   if (stand && dealerHandValueChecked(dealerCards) < 17) {
+  //   if (stand && dealerHandValue < 17) {
   //     setIsTimeoutActive(true);
   //     const timeoutID = setTimeout(() => {
   //       setIsTimeoutActive(false);
-  //       dealerHit();
+  //       handleDealerHit();
   //     }, 2000);
   //     return () => {
   //       clearTimeout(timeoutID);
   //     }
   //   }else if (props.stand && dealerHandValueChecked(dealerCards) > 17){
       
-  //     props.handleEndRound()
+  //     // props.handleEndRound()
   //   }
-  // }, [props.stand, dealerHit]);
+  // }, [props.stand, handleDealerHit]);
 
 
   return (
