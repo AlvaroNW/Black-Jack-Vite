@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import { cardDraw, cardHit } from "../utility/APICalls";
 import {  DealerHandValueCalc } from '../utility/CalcUtils';
+import DealerActions from '../DealerComponents/DealerActions'
 
 import DealerHand from "./DealerHand";
 
 export default function Dealer({dealerCards, setDealerCards, deckID, stand, playerCards, setInGame, inGame}) {
   const [holeCard, setHoleCard] = useState(true);
   const [isTimeoutActive, setIsTimeoutActive] = useState(false)
+
 
   const dealerHandValue = DealerHandValueCalc(dealerCards);
 
@@ -24,6 +26,7 @@ export default function Dealer({dealerCards, setDealerCards, deckID, stand, play
     if (playerCards.length === 2) {
       setHoleCard(true)
       handleDealerDraw();
+      
     }
   }, [playerCards])
   
@@ -48,13 +51,16 @@ export default function Dealer({dealerCards, setDealerCards, deckID, stand, play
       }
     }else if (stand && dealerHandValue > 17){
       setInGame(false)
+
       
     }
+    
   }, [stand, handleDealerHit]);
 
 
   return (
     <div className="dealer-hand-display">
+      {!holeCard && <DealerActions dealerCards={dealerCards} />}
       <DealerHand dealerCards={dealerCards} holeCard={holeCard}/>
     </div>
   )
