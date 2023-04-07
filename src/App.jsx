@@ -93,7 +93,12 @@ function App() {
     <>
 
         <div>
-          < ShowWinner />
+          < ShowWinner 
+            playerCards={playerCards}
+            dealerCards={dealerCards}
+          
+          
+          />
         </div>
         <div>
         <HandValuesSum

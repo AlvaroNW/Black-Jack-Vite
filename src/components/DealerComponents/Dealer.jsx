@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { cardDraw, cardHit } from "../utility/APICalls";
-import {  DealerHandValueCalc } from '../utility/calcUtils';
+import {  DealerHandValueCalc } from '../utility/CalcUtils';
 
 import DealerHand from "./DealerHand";
 

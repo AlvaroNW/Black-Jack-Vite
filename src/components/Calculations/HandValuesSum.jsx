@@ -1,8 +1,8 @@
-import React from 'react'
-import { DealerHandValueCalc, playerHandValueCalc } from '../utility/calcUtils';
+import React, {useState, useEffect} from "react";
+import { DealerHandValueCalc, playerHandValueCalc } from '../utility/CalcUtils';
 
 export default function HandValuesSum({playerCards, dealerCards}) {
-
+  
   const playerHandValue = playerHandValueCalc(playerCards);
   const dealerHandValue = DealerHandValueCalc(dealerCards);
   console.log(`logging the playerHandValue ${playerHandValue} at HandValuesSum`);
