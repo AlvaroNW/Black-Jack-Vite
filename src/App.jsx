@@ -39,6 +39,8 @@ function App() {
           deckID={deckID}
           setDeckID={setDeckID}
           setInGame={setInGame}
+          inGame={inGame}
+          stand={stand}
         />
       </div>
       <div>

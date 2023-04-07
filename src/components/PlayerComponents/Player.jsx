@@ -2,8 +2,9 @@ import { getNewDeck, cardDraw, cardHit, shuffleDeck } from "../utility/APICalls"
 
 import React from 'react'
 import PlayerHand from "./PlayerHand";
+import PlayerActions from "./PlayerActions";
 
-export default function Player({setStand, playerCards, setPlayerCards, deckID,  setDeckID, setInGame}) {
+export default function Player({setStand, playerCards, setPlayerCards, deckID,  setDeckID, setInGame, stand, inGame}) {
 
   // functions come from utility/API/PlayerCalls.js, returning the data from the API
   const handleNewDeck = async () => {
@@ -39,6 +40,7 @@ export default function Player({setStand, playerCards, setPlayerCards, deckID,  
   return (
     <>
     <div className="Player-hand-display">
+      <PlayerActions  playerCards={playerCards} stand={stand} inGame={inGame}/>
       <PlayerHand playerCards={playerCards}/>
     </div>
     <div className="player-controls">
