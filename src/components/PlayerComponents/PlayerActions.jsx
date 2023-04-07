@@ -18,6 +18,6 @@ export default function PlayerActions({playerCards, stand, inGame}) {
   }, [stand, inGame])
   
 
-  return <h2>{playerActionMessage}</h2>;
+  return <h2 className="action-message">{playerActionMessage}</h2>;
 
 }

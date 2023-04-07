@@ -18,5 +18,5 @@ export default function DealerActions({ dealerCards })  {
     dealerMessage = `Dealer will draw a card...`;
   }
 
-  return <p>{dealerMessage}</p>;
+  return <h2 className="action-message">{dealerMessage}</h2>;
 }

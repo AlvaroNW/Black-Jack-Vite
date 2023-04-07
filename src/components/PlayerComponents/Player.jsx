@@ -28,9 +28,6 @@ export default function Player({setStand, playerCards, setPlayerCards, deckID,  
     setPlayerCards([...playerCards, ...playerHit]);
     setStand(true)
   }
-  const handleNewGame = async () => {
-    const playerHit = await shuffleDeck(deckID);
-  }
   const handleStand = () => {
     setStand(true)
     
@@ -39,9 +36,8 @@ export default function Player({setStand, playerCards, setPlayerCards, deckID,  
 
   return (
     <>
-    <div className="Player-hand-display">
+    <div className="player-actions">
       <PlayerActions  playerCards={playerCards} stand={stand} inGame={inGame}/>
-      <PlayerHand playerCards={playerCards}/>
     </div>
     <div className="player-controls">
       <button onClick={handleNewDeck}>PLAY</button>
@@ -49,8 +45,14 @@ export default function Player({setStand, playerCards, setPlayerCards, deckID,  
       <button onClick={handleStand}>STAND</button>
       <button onClick={handlePlayerHit}>Player Hit</button>
       <button onClick={handleDoubleDown}>DoubleDown</button>
-      <button onClick={handleNewGame}>NEW GAME</button>
     </div>
+    
+    {playerCards.length !== 0 && <div className="Player-hand-display">
+      <PlayerHand playerCards={playerCards}/>
+    </div>}
+
+
+
     </>
   )
 }

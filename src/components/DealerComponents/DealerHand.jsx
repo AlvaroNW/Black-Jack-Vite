@@ -2,7 +2,9 @@ import React from "react";
 
 export default function DealerHand({ dealerCards, holeCard }) {
   return (
-    <div className={holeCard ? "holedHand" : "cards-display"}>
+    <div className="dealer-hand">
+    <p>DEALER</p>
+    <div className={holeCard ? "holedHand" : "dealer-cards-display"}>
       {dealerCards?.map((dealerCard, index) => (
         <img
           src={
@@ -14,5 +16,7 @@ export default function DealerHand({ dealerCards, holeCard }) {
         />
       ))}
     </div>
+    </div>
+
   );
 }
