@@ -6,7 +6,7 @@ import HandValuesSum from "./components/Calculations/HandValuesSum";
 import ShowWinner from "./components/Calculations/ShowWinner";
 
 function App() {
-  const [deckID, setDeckID] = useState();
+  const [deckID, setDeckID] = useState('');
   const [playerCards, setPlayerCards] = useState([]);
   const [dealerCards, setDealerCards] = useState([]);
   const [stand, setStand] = useState(false);
@@ -27,6 +27,7 @@ function App() {
               dealerCards={dealerCards}
               stand={stand}
             />
+            
           </div>
         </div>
         <div className="playing-board">
@@ -54,7 +55,11 @@ function App() {
             />
           </div>
         </div>
+        <div className="bets">
+            <p>Bets</p>
+        </div>
       </div>
+
     </div>
   );
 }

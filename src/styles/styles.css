@@ -135,10 +135,15 @@ table {
   justify-content: center;
   text-align: center;
   border: 2px solid red;
-  height: 100vh;
+  height: 99vh;
+  background-color: black;
+  background-image: url('../assets/green.png');
+  color:  #F9F871;
+  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+
 }
 .board {
-  border: 2px solid blue;
   display: flex;
   width: 100%;
   height: 100vh;
@@ -146,32 +151,47 @@ table {
 .counters {
   display: flex;
   flex-direction: column;
-  padding: 10em;
+  justify-content: center;
+  align-items: center;
   font-size: 1.5em;
-  border: 2px solid blue;
-  flex-basis: 1;
+  border: 2px solid pink;
+  flex-grow: 1;
+  flex-basis: 0;
+  max-width: 23%;
 }
-
 .playing-board {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: auto;
-  flex-basis: 2;
+  flex-grow: 2;
+  flex-basis: 0;
   height: 100vh;
-  width: 100%;
   border: 2px solid yellow;
+  max-width: 53%;
 }
+.Bets{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  flex-basis: 0;
+  height: 100vh;
+  border: 2px solid yellow;
+  max-width: 23%;
+}
+
 .Player {
-  border: 2px solid green;
+  padding: 1em;
 }
 .Dealer {
-  border: 2px solid green;
+  padding: 1em;
 }
 .player-controls {
   margin-top: 2em;
   margin-bottom: 2em;
+  width: 100%;
 }
 .player-actions {
   margin-top: 2em;
@@ -195,4 +215,17 @@ table {
 .dealer-cards-display {
   opacity: 1;
   transition: opacity 0.2s ease-in-out;
+}
+.button{
+  width: 10em;
+  height: 4em;
+  cursor: pointer;
+  margin: 0.5em;
+  background-color: #F9F871;
+  box-shadow: #223023 2px 2px 2px 2px;
+  border-color: #F9F871;
+  border-style: solid;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: .8em;
 }
