@@ -10,12 +10,20 @@ export default function ShowWinner({ playerCards, dealerCards}) {
   useEffect(() => {
 
     console.log("useEffect called");
-    const newWinner =
-      dealerHandValue > playerHandValue
-        ? "Dealer Wins!"
-        : dealerHandValue < playerHandValue
-        ? "Player Wins!"
-        : "Push!";
+    let newWinner;
+      if (dealerHandValue <= 21 && dealerHandValue > playerHandValue) {
+        newWinner = "Dealer Wins!";
+      } else if (dealerHandValue <= 21 && playerHandValue <= 21 && dealerHandValue < playerHandValue) {
+        newWinner = "Player Wins!";
+      } else if (dealerHandValue <= 21 && playerHandValue <= 21 && dealerHandValue > playerHandValue) {
+        newWinner = "Dealer Wins!";
+      } else if (playerHandValue <= 21 && dealerHandValue < playerHandValue) {
+        newWinner = "Player Wins!";
+      } else if (playerHandValue > 21) {
+        newWinner = "Player is bust!";
+      } else {
+        newWinner = "Push!";
+      }
       
     setWinner(newWinner);
     console.log(newWinner);
