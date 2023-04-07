@@ -10,103 +10,25 @@ const NEW_DECK_ENDPOINT_SIX_DECKS =
 const REUSE_DECK_ENDPOINT = "https://deckofcardsapi.com/api/deck/";
 
 function App() {
-  const [drawCards, setDrawCards] = useState([]); //AKA player Cards
-  const [inGame, setInGame] = useState(false);
-  const [stand, setStand] = useState(false);
-  const [showDealer, setShowDealer] = useState(false);
+  
+
   const [showEndgame, setShowEndgame] = useState(false);
 
   //New Logic
   const [deckID, setDeckID] = useState();
   const [playerCards, setPlayerCards] = useState([]);
   const [dealerCards, setDealerCards] = useState([]);
+  const [stand, setStand] = useState(false);
+  const [inGame, setInGame] = useState(false);
 
-  //Get 6 decks from API
-  useEffect(() => {
-    fetch(NEW_DECK_ENDPOINT_SIX_DECKS)
-      .then((response) => response.json())
-      .then((data) => {
-        setDeckID(data.deck_id);
-      });
-  }, []);
-
-  console.log(deckID);
-
-  // const handleNewRound = () => {
-  //   fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=2`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       setDrawCards(data.cards);
-  //     });
-  //   setInGame(true);
-  //   setStand(false);
-  //   setShowDealer(true);
-  // };
-  // const handleHit = () => {
-  //   fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=1`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setDrawCards([...drawCards, ...data.cards]);
-  //     });
-  // };
-  // const handleDoubleDown = () => {
-  //   fetch(`${REUSE_DECK_ENDPOINT}${deckID}/draw/?count=1`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setDrawCards([...drawCards, ...data.cards]);
-  //     });
-  //   setStand(true);
-  //   setInGame(false);
-  // };
-  // function shuffleDeck() {
-  //   fetch(`${REUSE_DECK_ENDPOINT}${deckID}/shuffle`);
-  //   setDrawCards([]);
-  //   setInGame(false);
-  //   setShowDealer(false);
-  //   setShowEndgame(false);
-  // }
-  // function handleStand() {
-  //   setInGame(false);
-  //   setStand(true);
-  // }
-
-  // const handleEndRound = () => {
-  //   setShowEndgame(true);
-  // };
-
-  // const handleHandValue = (handValue) => {
-  //   if (handValue <= 20 && handValue > 0) {
-  //     setStand(false);
-  //   } else if (handValue > 21) {
-  //     setInGame(false);
-  //     setStand(true);
-  //   } else if (handValue === 0) {
-  //     setStand(false);
-  //   } else {
-  //     setInGame(false);
-  //     setStand(true);
-  //   }
-  // };
 
   return (
     <>
-
-        <div>
-          < ShowWinner 
-            playerCards={playerCards}
-            dealerCards={dealerCards}
-          
-          
-          />
-        </div>
-        <div>
-        <HandValuesSum
-          playerCards={playerCards}
-          dealerCards={dealerCards}
-        
-        
-        />
+      <div>
+        {inGame &&<ShowWinner playerCards={playerCards} dealerCards={dealerCards} />}
+      </div>
+      <div>
+        <HandValuesSum playerCards={playerCards} dealerCards={dealerCards} stand={stand}  />
       </div>
       <div>
         <Player
@@ -115,26 +37,26 @@ function App() {
           setPlayerCards={setPlayerCards}
           deckID={deckID}
           setDeckID={setDeckID}
+          setInGame={setInGame}
         />
       </div>
       <div>
-        <Dealer 
-          dealerCards={dealerCards}
-          setDealerCards={setDealerCards}
-          deckID={deckID}
-          stand={stand}
-          playerCards={playerCards}
-        
-        />
+          <Dealer
+            dealerCards={dealerCards}
+            setDealerCards={setDealerCards}
+            deckID={deckID}
+            stand={stand}
+            playerCards={playerCards}
+            setInGame={setInGame}
+            inGame={inGame}
+          />
       </div>
-
-
 
       {/* <div className="App">
         <h2>BlackJack</h2>
         <div className="player-hand">
           {/* showHandvalue is used to control which part of the return of Card Sum gets rendered in app.js or in Dealer Component */}
-          {/* <CardSum
+      {/* <CardSum
             drawCards={drawCards}
             showInApp={true}
             handleHandValue={handleHandValue}
@@ -165,7 +87,7 @@ function App() {
           )}
         </div>
         <div className="dealer"> */}
-          {/* {showDealer && (
+      {/* {showDealer && (
             <Dealer
               deckID={deckID}
               REUSE_DECK_ENDPOINT={REUSE_DECK_ENDPOINT}

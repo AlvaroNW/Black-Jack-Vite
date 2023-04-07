@@ -3,7 +3,7 @@ import { getNewDeck, cardDraw, cardHit, shuffleDeck } from "../utility/APICalls"
 import React from 'react'
 import PlayerHand from "./PlayerHand";
 
-export default function Player({setStand, playerCards, setPlayerCards, deckID,  setDeckID}) {
+export default function Player({setStand, playerCards, setPlayerCards, deckID,  setDeckID, setInGame}) {
 
   // functions come from utility/API/PlayerCalls.js, returning the data from the API
   const handleNewDeck = async () => {
@@ -13,6 +13,9 @@ export default function Player({setStand, playerCards, setPlayerCards, deckID,  
   const handlePlayerDraw = async () => {
     const playerDraw = await cardDraw(deckID);
     setPlayerCards(playerDraw);
+    setInGame(true)
+    setStand(false)
+
   }
   const handlePlayerHit = async () => {
     const playerHit = await cardHit(deckID);
@@ -29,6 +32,7 @@ export default function Player({setStand, playerCards, setPlayerCards, deckID,  
   }
   const handleStand = () => {
     setStand(true)
+    
   }
 
 
@@ -39,7 +43,7 @@ export default function Player({setStand, playerCards, setPlayerCards, deckID,  
     </div>
     <div className="player-controls">
       <button onClick={handleNewDeck}>PLAY</button>
-      <button onClick={handlePlayerDraw}>Player Draw</button>
+      <button onClick={handlePlayerDraw}>NEW GAME</button>
       <button onClick={handleStand}>STAND</button>
       <button onClick={handlePlayerHit}>Player Hit</button>
       <button onClick={handleDoubleDown}>DoubleDown</button>

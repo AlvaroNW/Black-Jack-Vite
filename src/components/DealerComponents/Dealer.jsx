@@ -4,7 +4,7 @@ import {  DealerHandValueCalc } from '../utility/CalcUtils';
 
 import DealerHand from "./DealerHand";
 
-export default function Dealer({dealerCards, setDealerCards, deckID, stand, playerCards}) {
+export default function Dealer({dealerCards, setDealerCards, deckID, stand, playerCards, setInGame, inGame}) {
   const [holeCard, setHoleCard] = useState(true);
   const [isTimeoutActive, setIsTimeoutActive] = useState(false)
 
@@ -28,8 +28,12 @@ export default function Dealer({dealerCards, setDealerCards, deckID, stand, play
   }, [playerCards])
   
   useEffect(() => {
-    setHoleCard(false);
-  }, [stand])
+    if (playerCards.length >=2 && stand){
+      setHoleCard(false);
+    }else{
+      setHoleCard(true)
+    }
+  }, [stand, inGame])
 
 
   useEffect(() => {
@@ -43,15 +47,14 @@ export default function Dealer({dealerCards, setDealerCards, deckID, stand, play
         clearTimeout(timeoutID);
       }
     }else if (stand && dealerHandValue > 17){
+      setInGame(false)
       
-      // props.handleEndRound()
     }
   }, [stand, handleDealerHit]);
 
 
   return (
     <div className="dealer-hand-display">
-      DEALER
       <DealerHand dealerCards={dealerCards} holeCard={holeCard}/>
     </div>
   )
