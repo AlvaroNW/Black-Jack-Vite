@@ -4,18 +4,14 @@ import Dealer from "./components/DealerComponents/Dealer";
 import Player from "./components/PlayerComponents/Player";
 import HandValuesSum from "./components/Calculations/HandValuesSum";
 import ShowWinner from "./components/Calculations/ShowWinner";
-import DealerActions from "./components/DealerComponents/DealerActions";
+
 
 const NEW_DECK_ENDPOINT_SIX_DECKS =
   "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6";
 const REUSE_DECK_ENDPOINT = "https://deckofcardsapi.com/api/deck/";
 
 function App() {
-  
 
-  const [showEndgame, setShowEndgame] = useState(false);
-
-  //New Logic
   const [deckID, setDeckID] = useState();
   const [playerCards, setPlayerCards] = useState([]);
   const [dealerCards, setDealerCards] = useState([]);
