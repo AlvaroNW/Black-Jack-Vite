@@ -26,8 +26,10 @@ export default function ShowWinner({ playerCards, dealerCards }) {
       newWinner = "Dealer Wins!";
     } else if (playerHandValue <= 21 && dealerHandValue < playerHandValue) {
       newWinner = "Player Wins!";
-    } else if (playerHandValue > 21) {
-      newWinner = "Player is bust!";
+    } else if (playerHandValue > 21 && dealerHandValue <= 21) {
+      newWinner = "Player is bust! Dealer wins!";
+    } else if (dealerHandValue > 21 && playerHandValue <= 21) {
+      newWinner = "Dealer is bust! Player wins!";
     } else {
       newWinner = "Push!";
     }
