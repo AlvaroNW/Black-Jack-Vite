@@ -12,7 +12,7 @@ export default function DealerActions({ dealerCards })  {
     dealerMessage = `Dealer stood on a ${dealerHandValue}`;
   } else if (dealerHandValue > 21) {
     dealerMessage = "Dealer busted out!";
-  } else if (dealerHandValue === 21) {
+  } else if (dealerHandValue === 21 && dealerCards.length === 2) {
     dealerMessage = "Dealer got BlackJack!";
   }else{
     dealerMessage = `Dealer will draw a card...`;

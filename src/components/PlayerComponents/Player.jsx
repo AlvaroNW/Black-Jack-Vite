@@ -37,14 +37,14 @@ export default function Player({setStand, playerCards, setPlayerCards, deckID,  
   return (
     <>
     <div className="player-actions">
-      <PlayerActions  playerCards={playerCards} stand={stand} inGame={inGame}/>
+      <PlayerActions  playerCards={playerCards} stand={stand} inGame={inGame} setStand={setStand}/>
     </div>
     <div className="player-controls">
       {!inGame && deckID ==='' && <button className="button" onClick={handleNewDeck}>PLAY</button>}
-      {!inGame && <button className="button"onClick={handlePlayerDraw}>START ROUND</button>}
-      {inGame && <button className="button"onClick={handleStand}>STAND</button>}
-      {inGame &&<button className="button"onClick={handlePlayerHit}>HIT</button>}
-      {inGame &&<button className="button"onClick={handleDoubleDown}>DOUBLE DOWN</button>}
+      {!inGame && deckID !=='' && <button className="button"onClick={handlePlayerDraw}>START ROUND</button>}
+      {inGame && !stand && <button className="button"onClick={handleStand}>STAND</button>}
+      {inGame && !stand && <button className="button"onClick={handlePlayerHit}>HIT</button>}
+      {inGame && !stand && <button className="button"onClick={handleDoubleDown}>DOUBLE DOWN</button>}
     </div>
     
     {playerCards.length !== 0 && <div className="Player-hand-display">
